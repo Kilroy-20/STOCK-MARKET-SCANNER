@@ -22,7 +22,7 @@ def calculate_cpr(high, low, close):
 
 def fetch_and_scan(symbol):
     try:
-        data = yf.download(symbol, period="5d", interval="1d", progress=False)
+        data = yf.download(symbol, period="5d", interval="1d",auto_adjust=False, progress=False)
         if len(data) < 2:
             return None
 
@@ -30,7 +30,7 @@ def fetch_and_scan(symbol):
         high, low, close = prev_day['High'], prev_day['Low'], prev_day['Close']
         _, bc, tc, width = calculate_cpr(high, low, close)
         width_pct = round((width / close) * 100, 4)
-        return symbol, width_pct
+        return symbol, float(width_pct)
     except:
         return None
 
